@@ -1,5 +1,3 @@
-__author__ = 'ZiYuan'
-
 import numpy as np
 import logging
 import sys
