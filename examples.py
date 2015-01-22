@@ -1,7 +1,8 @@
 from check_gradient import *
+import logging
 
-_logger = logging.getLogger("example")
-_logger.setLevel(logging.INFO)
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
 _logger.addHandler(logging.StreamHandler())
 
 

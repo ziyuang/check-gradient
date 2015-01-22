@@ -1,10 +1,9 @@
 import numpy as np
 import logging
-import sys
 from functools import wraps
 
 _logger = logging.getLogger(__name__)
-_logger.setLevel(logging.INFO)
+_logger.setLevel(logging.DEBUG)
 _logger.addHandler(logging.NullHandler())
 
 
@@ -32,8 +31,14 @@ def _obj_plus_minus_tuple(f, x, eps, *args, **kwargs):
     return obj_plus, obj_minus
 
 
-# the default function for showing both analytical gradient and empirical gradient
 def _comp_grads_func_default(a_grad, e_grad, logger=_logger, verbose=False):
+    """the default function for showing both analytical gradient and empirical gradient
+    :argument
+        a_grad: the analytical gradient
+        e_grad: the empirical gradient
+        logger: the logger for showing the comparison result
+        verbose: when True, print both gradients
+    """
     if np.isscalar(a_grad):
         assert np.isscalar(e_grad), \
             "The analytical gradient is scalar but the empirical gradient is not."
@@ -43,21 +48,23 @@ def _comp_grads_func_default(a_grad, e_grad, logger=_logger, verbose=False):
         assert a_grad.shape == e_grad.shape, \
             "The shapes of the analytical gradient and the empirical gradient don't match."
     if np.allclose(a_grad, e_grad):
-        sys.stdout.flush()
-        logger.info("Gradient checking passed.")
-        sys.stderr.flush()
+        logger.debug("Gradient checking passed.")
         return True
     else:
-        sys.stdout.flush()
         logger.warning("Gradient checking didn't pass.")
         if verbose:
             logger.warning("Analytical gradient = %s" % repr(a_grad))
             logger.warning("Empirical gradient = %s" % repr(e_grad))
-        sys.stderr.flush()
         return False
 
 
 def check_gradient(eps=1e-7, comp_grads_func=_comp_grads_func_default, **comp_grads_func_kwargs):
+    """A decorator for comparing the analytical gradient with the empirical gradient.
+    :argument
+        eps: the step for calculating the empirical gradient (default: 1e-7); setting it too large may fail the check
+        comp_grads_func: the function for comparing the two gradients and show the information
+        comp_grads_func_kwargs: optional arguments for comp_grads_func
+    """
     def specialized_decorator(f):
         # f is expected to return a tuple of (objective value, gradient)
         @wraps(f)
@@ -87,6 +94,15 @@ def check_gradient(eps=1e-7, comp_grads_func=_comp_grads_func_default, **comp_gr
 
 def is_gradient_correct(obj_func, grad_func, x, args=(), kwargs=None,
                         eps=1e-7, comp_grads_func=_comp_grads_func_default, **comp_grads_func_kwargs):
+    """A function doing the same job the check_gradient. obj_func and grad_func should have the same signature.
+    :argument
+        args: *args for obj_func and grad_func
+        kwargs: **kwargs for obj_func and grad_func
+        others: the same as check_gradient
+    :return
+        True: the analytical gradient is probably correct if the chosen eps does not affect much
+        False: the analytical gradient is probably incorrect if the chosen eps does not affect much
+    """
     if kwargs is None:
         kwargs = {}
     a_grad = grad_func(x, *args, **kwargs)
