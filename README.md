@@ -12,7 +12,7 @@ Suppose the target function `f` accepts `x` as the first argument, and return a 
         ...
   ```
     
-will check the gradient of `f` at `x` and print the result when `f` is called.
+will check the gradient of `f` at `x` and print the comparison result when `f` is called.
 
 #### Optional arguments
 
