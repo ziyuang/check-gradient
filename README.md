@@ -1,5 +1,5 @@
 # Check gradient
-A helper for checking the correctness of the analytical gradient of a function by comparing it with the empirical (numerical) gradient
+A helper for checking the correctness of the analytical gradient of a function by comparing it with the empirical (numerical) gradient.
 
 ## Usage
 
