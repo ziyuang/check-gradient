@@ -4,7 +4,7 @@ A helper for checking the correctness of the analytical gradient of a function b
 ## Usage
 
 ### Via the decorator
-Suppose the target function `f` accepts `x` as the first argument, and return a tuple consisting of the objective value and the gradient at `x`. In the simplest case,
+Suppose you already have a function `f` accepting `x` as the first argument and returning a tuple consisting of the objective value and the gradient at `x`. In the simplest case, adding decorator `check_gradient` before the declaration of `f` like:
 
   ```python
   @check_gradient()
