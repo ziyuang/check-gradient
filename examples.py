@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from check_gradient import *
 import logging
 
