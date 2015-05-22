@@ -20,7 +20,7 @@ will check the gradient of `f` at `x` and print the comparison result when `f` i
 * `comp_grads_func`: the function for comparing the two gradients and show the information, a default implementation is provided
     * signature: `comp_grads_func(analytical_gradient, empirical_gradient, logger=default_logger, verbose=False)`
     * optional arguments:
-        * `logger`: the logger for the comparison message (default: a logger with `NullHandler()` as the handler)
+        * `logger`: the logger for the message from the comparison (default: prints to `sys.stderr`)
         * `verbose`: when set to `True`, print the contents of the two gradients.
 * `**comp_grads_func_kwargs`: `comp_grads_func`'s optional arguments
 
