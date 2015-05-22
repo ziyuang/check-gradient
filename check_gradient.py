@@ -4,7 +4,7 @@ from functools import wraps
 
 _logger = logging.getLogger(__name__)
 _logger.setLevel(logging.DEBUG)
-_logger.addHandler(logging.NullHandler())
+_logger.addHandler(logging.StreamHandler())
 
 
 def _obj_plus_minus_tuple(f, x, eps, *args, **kwargs):
