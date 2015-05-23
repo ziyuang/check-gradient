@@ -2,9 +2,9 @@ import numpy as np
 import logging
 from functools import wraps
 
-_logger = logging.getLogger(__name__)
-_logger.setLevel(logging.DEBUG)
-_logger.addHandler(logging.StreamHandler())
+_check_gradient_default_logger = logging.getLogger(__name__)
+_check_gradient_default_logger.setLevel(logging.DEBUG)
+_check_gradient_default_logger.addHandler(logging.StreamHandler())
 
 
 def _obj_plus_minus_tuple(f, x, eps, *args, **kwargs):
@@ -31,7 +31,7 @@ def _obj_plus_minus_tuple(f, x, eps, *args, **kwargs):
     return obj_plus, obj_minus
 
 
-def _comp_grads_func_default(a_grad, e_grad, logger=_logger, verbose=False):
+def _comp_grads_func_default(a_grad, e_grad, logger=_check_gradient_default_logger, verbose=False):
     """the default function for showing both analytical gradient and empirical gradient
     :argument
         a_grad: the analytical gradient
