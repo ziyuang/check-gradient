@@ -52,6 +52,7 @@ def _comp_grads_func_default(a_grad, e_grad, logger=_check_gradient_default_logg
         return True
     else:
         logger.warning("Gradient checking didn't pass.")
+        logger.warning("||analytical_gradient - empirical_gradient||_F = %f" % np.linalg.norm(a_grad-e_grad))
         if verbose:
             logger.warning("Analytical gradient = %s" % repr(a_grad))
             logger.warning("Empirical gradient = %s" % repr(e_grad))
